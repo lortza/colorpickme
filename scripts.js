@@ -34,39 +34,47 @@ class ColorPicker {
 
 }//end ColorPicker
 
+
+
+class UI {
+  constructor(colorPicker){
+    this.opacityDropdown = document.querySelector('#opacity-dropdown')
+    this.colorBox = document.querySelector('#color-box')
+    this.rgbText = document.querySelector('#rgb-text')
+    this.hexText = document.querySelector('#hex-text')
+    this.rgbButton = document.querySelector('#rgb-button')
+    this.hexButton = document.querySelector('#hex-button')
+  }
+
+  render(){
+    this.rgbText.setAttribute('value', colorPicker.rgb())
+    this.rgbText.style.color = colorPicker.rgb()
+
+    this.hexText.setAttribute('value', colorPicker.hex())
+    this.hexText.style.color = colorPicker.hex()
+
+    this.colorBox.style.backgroundColor = colorPicker.rgb()
+  }
+
+  copyToClipboard(source) {
+    // use anon function to access the callback's param
+    return function() {
+      source.select();
+      document.execCommand("Copy");
+    }
+  }
+}//end UI
+
 let colorPicker = new ColorPicker()
-
-const opacityDropdown = document.querySelector('#opacity-dropdown')
-const mouseZone = document.querySelector('#mouse-zone')
-const rgbOutput = document.querySelector('#rgb-output')
-const hexOutput = document.querySelector('#hex-output')
-const rgbButton = document.querySelector('#rgb-button')
-const hexButton = document.querySelector('#hex-button')
-
-
-function renderColorsToDom(){
-  rgbOutput.setAttribute('value', colorPicker.rgb())
-  rgbOutput.style.color = colorPicker.rgb()
-
-  hexOutput.setAttribute('value', colorPicker.hex())
-  hexOutput.style.color = colorPicker.hex()
-
-  mouseZone.style.backgroundColor = colorPicker.rgb()
-}
+let ui = new UI
 
 function assignColors(event){
-  colorPicker.updateColors(event.offsetX, event.offsetY, Math.round( (event.offsetX / 5) + (event.offsetY / 3) ))
-  renderColorsToDom()
+  let r = event.offsetX
+  let g = event.offsetY
+  let b = Math.round( (event.offsetX / 5) + (event.offsetY / 3) )
+  colorPicker.updateColors(r, g, b)
+  ui.render()
 }
-
-function copyToClipboard(source) {
-  // use anon function to access the callback's param
-  return function() {
-    source.select();
-    document.execCommand("Copy");
-  }
-}
-
 
 //-----------------------------------------
 
@@ -85,23 +93,23 @@ const opacities = [
 ]
 
 let htmlOptions = opacities.map(opacity => `<option value="${opacity.display}">${opacity.display}</option>`).join('')
-opacityDropdown.insertAdjacentHTML('beforeend', htmlOptions)
+ui.opacityDropdown.insertAdjacentHTML('beforeend', htmlOptions)
 
 
 //-----------------------------------------
 
 
 // Update the opacity of the current color
-opacityDropdown.addEventListener('change', function(){
+ui.opacityDropdown.addEventListener('change', function(){
   let optText = this.options[this.selectedIndex].value
   let opacityObj = opacities.find(function(op){ return op.display === optText })
   colorPicker.updateOpacity(opacityObj.val)
-  renderColorsToDom()
+  ui.render()
 })
 
 // Handle the mouse movement and click behaviors
-renderColorsToDom()
-mouseZone.addEventListener('mousemove', assignColors)
-mouseZone.addEventListener('click', copyToClipboard(rgbOutput))
-rgbButton.addEventListener('click', copyToClipboard(rgbOutput))
-hexButton.addEventListener('click', copyToClipboard(hexOutput))
+ui.render()
+ui.colorBox.addEventListener('mousemove', assignColors)
+ui.colorBox.addEventListener('click', ui.copyToClipboard(ui.rgbText))
+ui.rgbButton.addEventListener('click', ui.copyToClipboard(ui.rgbText))
+ui.hexButton.addEventListener('click', ui.copyToClipboard(ui.hexText))

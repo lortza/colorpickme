@@ -6,7 +6,7 @@ body {
 
 #options-picker{margin-top:20px;}
 
-#mouse-zone {
+#color-box {
   border: 1px solid gray;
   margin: 20px auto;
   height: 255px;
@@ -25,10 +25,10 @@ input {
 }
 input:focus { outline: none; }
 
-#rgb-output {
+#rgb-text {
   font-size: 3em;
 }
-#hex-output {
+#hex-text {
   font-size: 2em;
 }
 

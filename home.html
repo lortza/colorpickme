@@ -10,8 +10,8 @@
 <body>
 
   <main>
-    <input type="text" value="rgb here" id="rgb-output">
-    <input type="text" value="hex here" id="hex-output">
+    <input type="text" value="rgb here" id="rgb-text">
+    <input type="text" value="hex here" id="hex-text">
 
     <label>Select a Different Opacity</label>
     <select id='opacity-dropdown'>
@@ -21,9 +21,9 @@
     <p>Mouse around in the square below to change the background color.</p>
     <p>Click inside the square to copy the rgb value to your clipboard.</p>
 
-    <article id="mouse-zone"></article>
-    <br><div id="rgb-button" class="button">Copy RGB to Clipboard</div>
-    <div id="hex-button" class="button">Copy HEX to Clipboard</div>
+    <article id="color-box"></article>
+    <p id="rgb-button" class="button">Copy RGB to Clipboard</p>
+    <p id="hex-button" class="button">Copy HEX to Clipboard</p>
   </main>
 
   <script type="text/javascript" src="scripts.js"></script>
