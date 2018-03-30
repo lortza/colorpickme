@@ -4,9 +4,11 @@ body {
   background-image: url('images/batthern.png');
 }
 
+#options-picker{margin-top:20px;}
+
 #mouse-zone {
   border: 1px solid gray;
-  margin: 30px auto;
+  margin: 20px auto;
   height: 255px;
   width: 255px;
   text-align: center;
@@ -25,7 +27,6 @@ body {
 
 #button {
   display: inline-block;
-  margin-top: 20px;
   background: #3498db;
   background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
   background-image: -moz-linear-gradient(top, #3498db, #2980b9);
