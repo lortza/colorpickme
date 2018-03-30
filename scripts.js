@@ -1,8 +1,8 @@
 class ColorPicker {
   constructor(){
-    this.red = 200
-    this.green = 121
-    this.blue = 90
+    this.red = 230
+    this.green = 44
+    this.blue = 61
     this.opacity = 1
   }
 
