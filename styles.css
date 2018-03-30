@@ -49,6 +49,7 @@ input:focus { outline: none; }
   font-size: 15px;
   padding: 10px 15px 10px 15px;
   text-decoration: none;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .button:hover {
@@ -60,5 +61,6 @@ input:focus { outline: none; }
   background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
