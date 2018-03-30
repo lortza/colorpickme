@@ -14,37 +14,65 @@ const opacities = [
 const optionsPicker = document.querySelector('#options-picker')
 const mouseZone = document.querySelector('#mouse-zone')
 const rgbOutput = document.querySelector('#rgb-output')
-const copyButton = document.querySelector('#button')
+const hexOutput = document.querySelector('#hex-output')
+const rgbButton = document.querySelector('#rgb-button')
+const hexButton = document.querySelector('#hex-button')
+
 let red = 250
 let green = 121
 let blue = 90
 let opacity = 1
+let rgb = `rgba(${red},${green},${blue},${opacity})`
+let hex = rgbToHex(red, green, blue)
 
-const reportColors = function(){
-  let rgb = `rgba(${red},${green},${blue},${opacity})`
-  rgbOutput.setAttribute('value', rgb)
-  rgbOutput.style.color = rgb
-  mouseZone.style.backgroundColor = rgb
+// Convert to hex
+function componentToHex(n) {
+  n = parseInt(n,10);
+  if (isNaN(n)) return "00";
+  n = Math.max(0,Math.min(n,255));
+  return "0123456789ABCDEF".charAt((n-n%16)/16)
+  + "0123456789ABCDEF".charAt(n%16);
 }
 
-const assignColors = function(event){
+function rgbToHex(R,G,B) {
+  return `#${componentToHex(R)}${componentToHex(G)}${componentToHex(B)}`
+}
+
+function assignColors(event){
   red = event.offsetX
   green = event.offsetY
   blue = Math.round( (event.offsetX / 5) + (event.offsetY / 3) )
   reportColors()
 }
 
-const copyToClipboard = function(event){
+function reportColors(){
+  rgb = `rgba(${red},${green},${blue},${opacity})`
+  hex = rgbToHex(red, green, blue)
+  rgbOutput.setAttribute('value', rgb)
+  rgbOutput.style.color = rgb
+  hexOutput.setAttribute('value', hex)
+  hexOutput.style.color = hex
+  console.log(hex);
+  mouseZone.style.backgroundColor = rgb
+}
+
+function copyRgbToClipboard(event){
   rgbOutput.select();
   document.execCommand("Copy");
-  // alert(rgbOutput.value + " is copied to your clipboard");
+}
+
+function copyHexToClipboard(event){
+  hexOutput.select();
+  document.execCommand("Copy");
 }
 
 // Handle the mouse movement and click behaviors
 reportColors()
 mouseZone.addEventListener('mousemove', assignColors)
-mouseZone.addEventListener('click', copyToClipboard)
-copyButton.addEventListener('click', copyToClipboard)
+mouseZone.addEventListener('click', copyRgbToClipboard)
+rgbButton.addEventListener('click', copyRgbToClipboard)
+hexButton.addEventListener('click', copyHexToClipboard)
+
 
 // Handle the dropdown actions
 let htmlOptions = opacities.map(opacity => `<option value="${opacity.display}">${opacity.display}</option>`).join('')
@@ -57,3 +85,4 @@ optionsPicker.addEventListener('change', function(){
   opacity = opacityObj.val
   reportColors()
 })
+

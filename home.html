@@ -11,6 +11,7 @@
 
   <main>
     <input type="text" value="rgba(250,121,90,1)" id="rgb-output">
+    <input type="text" value="#hexhere" id="hex-output">
 
     <label>Select a Different Opacity</label>
     <select id='options-picker'></select>
@@ -18,8 +19,9 @@
     <p>Mouse around in the square below to change the background color.</p>
     <p>Click inside the square to copy the rgb value to your clipboard.</p>
 
-    <article id="mouse-zone"></article><br>
-    <div id="button">Copy to Clipboard</div>
+    <article id="mouse-zone"></article>
+    <br><div id="rgb-button" class="button">Copy RGB to Clipboard</div>
+    <div id="hex-button" class="button">Copy HEX to Clipboard</div>
   </main>
 
   <script type="text/javascript" src="scripts.js"></script>
