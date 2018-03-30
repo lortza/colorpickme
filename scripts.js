@@ -14,17 +14,24 @@ const opacities = [
 const optionsPicker = document.querySelector('#options-picker')
 const mouseZone = document.querySelector('#mouse-zone')
 const rgbOutput = document.querySelector('#rgb-output')
-let opacity = 1;
+const copyButton = document.querySelector('#button')
+let red = 250
+let green = 121
+let blue = 90
+let opacity = 1
 
-const reportColors = function(event){
-  let red = event.offsetX
-  let green = event.offsetY
-  let blue = Math.round( (event.offsetX / 5) + (event.offsetY / 3) )
-  let rgb = `rgb(${red}, ${green}, ${blue}, ${opacity})`
-
+const reportColors = function(){
+  let rgb = `rgba(${red},${green},${blue},${opacity})`
   rgbOutput.setAttribute('value', rgb)
   rgbOutput.style.color = rgb
   mouseZone.style.backgroundColor = rgb
+}
+
+const assignColors = function(event){
+  red = event.offsetX
+  green = event.offsetY
+  blue = Math.round( (event.offsetX / 5) + (event.offsetY / 3) )
+  reportColors()
 }
 
 const copyToClipboard = function(event){
@@ -34,17 +41,19 @@ const copyToClipboard = function(event){
 }
 
 // Handle the mouse movement and click behaviors
-mouseZone.addEventListener('mousemove', reportColors)
+reportColors()
+mouseZone.addEventListener('mousemove', assignColors)
 mouseZone.addEventListener('click', copyToClipboard)
-
+copyButton.addEventListener('click', copyToClipboard)
 
 // Handle the dropdown actions
 let htmlOptions = opacities.map(opacity => `<option value="${opacity.display}">${opacity.display}</option>`).join('')
 optionsPicker.insertAdjacentHTML('beforeend', htmlOptions)
 
+// Update the opacity of the current color
 optionsPicker.addEventListener('change', function(){
   let optText = this.options[this.selectedIndex].value
   let opacityObj = opacities.find(function(op){ return op.display === optText })
   opacity = opacityObj.val
+  reportColors()
 })
-
