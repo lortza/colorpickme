@@ -60,7 +60,7 @@ class UI {
     // use anon function to access the callback's param
     return function() {
       source.select();
-      document.execCommand("Copy");
+      document.execCommand('copy');
     }
   }
 }//end UI
